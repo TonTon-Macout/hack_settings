@@ -1,0 +1,2 @@
+# hack_settings
+Примеры
