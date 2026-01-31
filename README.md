@@ -171,6 +171,7 @@ if (b.Switch("Звук молнии", &thunder_sound))b.reload();
 #### Этот код обратимо преобразует весь внешний вид веб интерфейса, делая его действительно красивым. Это полноценный пример, можно просто скопировать загрузить в есп, незабыв заполнить данные wifi
     
 ```cpp
+
 #include <Arduino.h>
 
 #define WIFI_SSID ""
@@ -225,116 +226,117 @@ void build(sets::Builder &b) {
   }
 
 
-    { sets::Group r(b);
-      if (b.Switch("Время", &timer))  b.reload();
-      if (timer) b.Time("установить", &timer_time);
-      if (timer){
-        sets::Row g(b);
-        if (b.Time("начало", &start_mute)) ;
-        if (b.Time("конец", &end_mute)) ;
-      }
+  { sets::Group r(b);
+    if (b.Switch("Время", &timer))  b.reload();
+    if (timer) b.Time("установить", &timer_time);
+    if (timer) {
+      sets::Row g(b);
+      if (b.Time("начало", &start_mute)) ;
+      if (b.Time("конец", &end_mute)) ;
     }
+  }
 
-    // Расширенные Настройки
-    { sets::Group r(b, "");
-      if (b.Switch("РАСШИРЕННЫЕ НАСТРОЙКИ", &show_setting)) b.reload();
-      
-      if (show_setting) {
-        if (b.Slider("слайдер", 1, 10000, 1, ""));
-        if (b.Switch("Switch"));
-        if (b.Slider("яркость", 0, 255, 1, "", &dimm));
-        if (b.Switch("сделать красиво", &my_theme)) b.reload();
-      }
-    }
+  // Расширенные Настройки
+  { sets::Group r(b, "");
+    if (b.Switch("РАСШИРЕННЫЕ НАСТРОЙКИ", &show_setting)) b.reload();
 
-    // логгер
     if (show_setting) {
-      sets::Group r(b, "ЛОГГЕР");
-      b.Log(logger);
-      {
-        sets::Buttons r(b);
-        if (b.Button("Очистить"))  //
-        {
-            logger.clear();
-            b.reload();
-        }
+      if (b.Slider("слайдер", 1, 10000, 1, ""));
+      if (b.Switch("Switch"));
+      if (b.Slider("яркость", 0, 255, 1, "", &dimm));
+      b.HTML("", "<span class=\"HR\"></span>");
+      if (b.Switch("сделать красиво", &my_theme)) b.reload();
+    }
+  }
 
-              if (b.Button("Инфо")) {
+  // логгер
+  if (show_setting) {
+    sets::Group r(b, "ЛОГГЕР");
+    b.Log(logger);
+    {
+      sets::Buttons r(b);
+      if (b.Button("Очистить"))  //
+      {
+        logger.clear();
+        b.reload();
+      }
+
+      if (b.Button("Инфо")) {
         static uint8_t count_ = 0;
         count_++;
 
 
-                        logger.print( "------------ STATUS ");
-                        logger.print(count_);
-                        logger.println( " ------------");
-                        logger.print("wifi RSSI: ");
-                        logger.println(WiFi.RSSI());
-                        // Вывод информации о памяти
-                        logger.println( "--- оперативная память ---");
-                        logger.println( "Свободная куча: " + (String)ESP.getFreeHeap() +" байт");
-                        logger.println( "Общий размер кучи: " + (String)ESP.getHeapSize() + " байт");
-                        logger.println( "Минимальная свободная куча: "+ (String)ESP.getMinFreeHeap()+ " байт");
-                        //  logger.println( "Максимальный блок кучи (Max Alloc Heap): ", ESP.getMaxAllocHeap(), " байт");
-                        logger.println( "--- флеш память ---");
-                        logger.println( "Общий размер флэш-памяти : "+ (String)ESP.getFlashChipSize()+" байт");
-                        logger.println( "Размер скетча : "+ (String)ESP.getSketchSize()+ " байт");
-                        logger.println( "Свободное место для скетча: "+ (String)ESP.getFreeSketchSpace()+ " байт");
-                        logger.println( "Частота флэш-памяти (Flash Chip Speed): "+ (String)ESP.getFlashChipSpeed()+ " Гц");
-                        logger.print( "Режим флэш-памяти (Flash Chip Mode): ") ;
-                        logger.print(ESP.getFlashChipMode() == FM_QIO ? "QIO" : ESP.getFlashChipMode() == FM_QOUT ? "QOUT"
-                                                                                                                           : ESP.getFlashChipMode() == FM_DIO    ? "DIO"
-                                                                                                                           : ESP.getFlashChipMode() == FM_DOUT   ? "DOUT"
-                                                                                                                                                                 : "UNKNOWN");
+        logger.print( "------------ STATUS ");
+        logger.print(count_);
+        logger.println( " ------------");
+        logger.print("wifi RSSI: ");
+        logger.println(WiFi.RSSI());
+        // Вывод информации о памяти
+        logger.println( "--- оперативная память ---");
+        logger.println( "Свободная куча: " + (String)ESP.getFreeHeap() + " байт");
+        logger.println( "Общий размер кучи: " + (String)ESP.getHeapSize() + " байт");
+        logger.println( "Минимальная свободная куча: " + (String)ESP.getMinFreeHeap() + " байт");
+        //  logger.println( "Максимальный блок кучи (Max Alloc Heap): ", ESP.getMaxAllocHeap(), " байт");
+        logger.println( "--- флеш память ---");
+        logger.println( "Общий размер флэш-памяти : " + (String)ESP.getFlashChipSize() + " байт");
+        logger.println( "Размер скетча : " + (String)ESP.getSketchSize() + " байт");
+        logger.println( "Свободное место для скетча: " + (String)ESP.getFreeSketchSpace() + " байт");
+        logger.println( "Частота флэш-памяти (Flash Chip Speed): " + (String)ESP.getFlashChipSpeed() + " Гц");
+        logger.print( "Режим флэш-памяти (Flash Chip Mode): ") ;
+        logger.print(ESP.getFlashChipMode() == FM_QIO ? "QIO" : ESP.getFlashChipMode() == FM_QOUT ? "QOUT"
+                     : ESP.getFlashChipMode() == FM_DIO    ? "DIO"
+                     : ESP.getFlashChipMode() == FM_DOUT   ? "DOUT"
+                     : "UNKNOWN");
 
-                        logger.println( "--- внешняя память ---");
-// Вывод информации о PSRAM (если поддерживается)
+        logger.println( "--- внешняя память ---");
+        // Вывод информации о PSRAM (если поддерживается)
 #ifdef CONFIG_SPIRAM_SUPPORT
-                        logger.println( "Общий размер PSRAM (PSRAM Size): "+ (String)ESP.getPsramSize()+ " байт");
-                        logger.println( "Свободный PSRAM (Free PSRAM): "+ (String)ESP.getFreePsram()+ " байт");
+        logger.println( "Общий размер PSRAM (PSRAM Size): " + (String)ESP.getPsramSize() + " байт");
+        logger.println( "Свободный PSRAM (Free PSRAM): " + (String)ESP.getFreePsram() + " байт");
 #else
-                        logger.println( "PSRAM: Не поддерживается на этом модуле");
+        logger.println( "PSRAM: Не поддерживается на этом модуле");
 #endif
 
-                        logger.println( "--- процессор ---");
-                        // Вывод информации о процессоре
-                        logger.println( "Частота процессора: "+ (String)ESP.getCpuFreqMHz()+ " МГц");
-                        logger.println( "Количество ядер: "+ (String)ESP.getChipCores());
-                        logger.println( "Модель чипа: "+ (String)ESP.getChipModel());
-                        logger.println( "Ревизия чипа: "+ (String)ESP.getChipRevision());
-                        logger.println( "Версия SDK: "+ (String)ESP.getSdkVersion());
+        logger.println( "--- процессор ---");
+        // Вывод информации о процессоре
+        logger.println( "Частота процессора: " + (String)ESP.getCpuFreqMHz() + " МГц");
+        logger.println( "Количество ядер: " + (String)ESP.getChipCores());
+        logger.println( "Модель чипа: " + (String)ESP.getChipModel());
+        logger.println( "Ревизия чипа: " + (String)ESP.getChipRevision());
+        logger.println( "Версия SDK: " + (String)ESP.getSdkVersion());
 
         b.reload();
       }
 
+    }
+
+  }
+
+  if (show_setting) {
+    sets::Group r(b, "WIFI");
+    if (b.Input("имя", AnyPtr(ssid, 25)));
+    if (b.Pass("пароль", AnyPtr(password, 20)));
+  }
+
+  {
+    sets::Buttons r(b);
+    if (b.Button("Перезагрузить", 0xEB5453)) ESP.restart();
+
+    if (b.Button("Обновить"))  b.reload();
+
+  }
+
+  { sets::Row r(b);
+    if (connected) b.Label(F(""), "хороший статус", 0x02b314);
+    else b.Label(F(""), "плохой статус", sets::Colors::Red);
+
+    if (!connected) {
+      if (b.Button(F("клац"))) {
+        connected = !connected;
+        b.reload();
       }
-
     }
-
-    if (show_setting) {
-      sets::Group r(b, "WIFI");
-      if (b.Input("имя", AnyPtr(ssid, 25)));
-      if (b.Pass("пароль", AnyPtr(password, 20)));
-    }
-
-    {
-        sets::Buttons r(b);
-        if (b.Button("Перезагрузить", 0xEB5453)) ESP.restart();
-
-        if (b.Button("Обновить"))  b.reload();
-        
-    }
-
-    {sets::Row r(b);
-      if (connected) b.Label(F(""), "хороший статус", 0x02b314);
-      else b.Label(F(""), "плохой статус", sets::Colors::Red);
-
-      if (!connected) {
-        if (b.Button(F("клац"))) {
-          connected = !connected;
-          b.reload();
-        }
-      }
-    }
+  }
 }
 const char theme[] PROGMEM = R"raw(
 class theme extends WidgetBase {
@@ -359,7 +361,7 @@ class theme extends WidgetBase {
     display: flex;
     height: 14px;
 }
-
+.widget:has(#uniqueStyle){display:none;!important;}
 /* ============================================== */
 /* ИСПРАВЛЕНИЯ СТИЛЕЙ СЕТТИНГС */
 div.main > div.main_col >div.page> div.buttons>.button:nth-child(1) {
@@ -399,7 +401,7 @@ body > div.main > div.main_col >div.page> div.buttons>.button {
 }
 /* ДЛЯ ТЕМНОЙ ТЕМЫ */
 /* добавить -- body.theme_light.theme_dark  */
- 
+
 /* названия групп */
 body.theme_light.theme_dark .group_title span {
     color: var(--accent);
@@ -611,6 +613,7 @@ void loop() {
 
   sett.tick();
 }
+
 ```
 </details>
 
