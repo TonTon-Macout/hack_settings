@@ -18,6 +18,8 @@
 > ❓ **Tip**: Как же мне скрыть *"название части интерфейса"*?
 > 
 > 💡  **Tip**: Воспользуемся html виджетом и подбором css селекторов
+
+
 <details>
 <summary>показать код</summary>
     
@@ -33,7 +35,8 @@ const char user_mode_css[] PROGMEM = R"raw(
 </style>
 )raw";
 
-static bool user_mode = false;
+static bool user<img width="545" height="966" alt="Снимок экрана 2026-01-31 211840" src="https://github.com/user-attachments/assets/1c2edd1c-b957-4de6-96aa-57a7db5343c0" />
+_mode = false;
 {   sets::Group  g(b, ""); 
     if(!user_mode) b.HTML("", user_mode_css);
     if(b.Switch("Режим разработчика", &user_mode)) b.reload();  
@@ -160,6 +163,13 @@ if (b.Switch("Звук молнии", &thunder_sound))b.reload();
 
 ---------------
 <h2 id="theme" >А если я любитель чего-то особенного?</h2>
+
+<details>
+<summary>картинка</summary>
+  
+<img width="545" height="966" alt="Снимок экрана 2026-01-31 211840" src="https://github.com/user-attachments/assets/cb35b43e-effa-4a38-b4fe-d7eac212468e" />
+
+</details>
 
 > ℹ️ **Tip**: Будем менять Settings до неузноваемости!
 >
@@ -620,4 +630,5 @@ void loop() {
 
 ------------
 <h2 id="innards" >Для тех кто желает по настоящему глубокого проникновения в сеттингс</h2>
+
 
