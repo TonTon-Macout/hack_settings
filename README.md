@@ -582,7 +582,7 @@ void setup() {
   Serial.println();
 
   // ======== WIFI ========
-  WiFi.mode(WIFI_AP_STA);
+  WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
   uint8_t tries = 20;
   while (WiFi.status() != WL_CONNECTED) {
