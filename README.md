@@ -713,7 +713,172 @@ server.onRequest([this](ghttp::ServerBase::Request req) {
 <details>
 <summary>myScrypt.h</summary>
 
+> здесь файл жаваскрипта, здесь мы может творить все что угодно с вебмордной.
+> в некоторых случаях потребуется таймаут-одидание, чтобы скрипт сеттингаса успел внести свои изменения
+
   ```
+
+//===  Скрываем пароль в окне ввода пароля. Б - Безопасность.
+
+const PASSWORD_MASK_ENABLED = true;  // true - скрипт работает, false - полностью отключен
+const PASSWORD_DEBUG = false;        // true - логи включены, false - выключены
+
+function applyPasswordMask() {
+    // Полное отключение скрипта
+    if (!PASSWORD_MASK_ENABLED) return;
+    
+    // Ищем только dialog_back, который появляется динамически
+    const dialogs = document.querySelectorAll('.dialog_back');
+    
+    if (PASSWORD_DEBUG) {
+        console.log(`🔍 Найдено dialog_back: ${dialogs.length}`);
+    }
+    
+    dialogs.forEach(dialog => {
+        const label = dialog.querySelector('label');
+        if (!label) return;
+        
+        const labelText = label.textContent.trim().toLowerCase();
+        
+        if (labelText === 'пароль') {
+            const textarea = dialog.querySelector('textarea');
+            
+            if (textarea) {
+                textarea.style.fontFamily = 'text-security-disc';
+                textarea.style.webkitTextSecurity = 'disc';
+                
+                if (PASSWORD_DEBUG) {
+                    console.log('✅ Маска пароля применена к диалогу');
+                }
+            }
+        }
+    });
+}
+
+// Применить к существующим, если скрипт включен
+if (PASSWORD_MASK_ENABLED) {
+    applyPasswordMask();
+}
+
+// Наблюдаем ТОЛЬКО за появлением dialog_back
+const observer = new MutationObserver((mutations) => {
+    // Полное отключение скрипта
+    if (!PASSWORD_MASK_ENABLED) return;
+    
+    let needsUpdate = false;
+    
+    mutations.forEach(mutation => {
+        mutation.addedNodes.forEach(node => {
+            // Проверяем, не появился ли dialog_back
+            if (node.nodeType === 1) { // element node
+                if (node.matches?.('.dialog_back') || node.querySelector?.('.dialog_back')) {
+                    needsUpdate = true;
+                }
+            }
+        });
+    });
+    
+    if (needsUpdate) {
+        setTimeout(applyPasswordMask, 50);
+    }
+});
+
+// Запускаем наблюдатель только если скрипт включен
+if (PASSWORD_MASK_ENABLED) {
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+}
+//=========
+
+
+// кнока  справки ================
+
+ function help(contentType = 'main') {
+    // Создание элементов
+    const popup = document.createElement('div');
+    const popupHeader = document.createElement('div');
+    const popupBody = document.createElement('div');
+    const popupFooter = document.createElement('div');
+    const closeButton = document.createElement('button');
+
+    // Присвоение классов
+    popup.className = 'popupHelp';
+    popupHeader.className = 'popupHelp-header';
+    popupBody.className = 'popupHelp-body';
+    popupFooter.className = 'popupHelp-footer';
+    closeButton.className = 'popupHelp-close-btn';
+   
+    //const versionElement = document.querySelector('[data-version]');
+    //const VERSION = versionElement ? versionElement.dataset.version : '[хз]';
+    //const vers = '<span style="color: gray;">версия прошивки: </span></br>' + VERSION ;
+    
+    // Контент
+    popupHeader.textContent = 'Справка';
+    switch (contentType.toLowerCase()) {
+        
+        case 'main':
+            popupBody.innerHTML = `
+               <!-- <h3>Оглавление</h3> 
+                
+                <h5>Оглавление</h5>-->
+                <ol class = "main_pop">
+                    <li><a href="#" onclick="help('help'); return false;">Теплицы</a> </li>
+                    <li><a href="#" onclick="help('about'); return false;">О программе</a> </li>
+                </ol>
+            `;
+
+            break;
+        case 'help':
+            popupBody.innerHTML = `
+                <h3>Помощ в пути!</h3>
+                <ul>
+                    <li>"<b>🤷</b>": или нет</li>
+                    <li>"<b>Баги</b>": их нет но есть фичи</li>
+                </ul>
+            `;
+            break;
+
+
+        case 'about':
+                popupBody.innerHTML = `
+                   <!-- <h3>О программе:</h3> -->
+                    <h4>Собсвтенно программа</h4>
+                    </br>
+                `;
+        break;
+ 
+ 
+ 
+            default:
+            popupBody.innerHTML = `
+                <h3>Ошибка</h3>
+                <p>упс...</p>
+            `;
+            break;
+    }
+
+    closeButton.textContent = 'Закрыть';
+
+
+    popup.style.display = 'flex'; // Показываем попап
+
+    // Обработчик для кнопки закрытия
+    closeButton.onclick = function() {
+        popup.style.display = 'none'; // Скрываем 
+        // Или document.body.removeChild(popup); для полного удаления
+    };
+
+    // Сборка попапа
+    popupFooter.appendChild(closeButton);
+    popup.appendChild(popupHeader);
+    popup.appendChild(popupBody);
+    popup.appendChild(popupFooter);
+    document.body.appendChild(popup);
+}
+//=========================
+
 
   ```
 </details>
