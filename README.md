@@ -720,6 +720,9 @@ server.onRequest([this](ghttp::ServerBase::Request req) {
 ``` b.HTML("", R"raw(<button  class="help_butt" type="button"  onclick="help('tepl')">?</button>)raw");  ```
 
   ```
+#pragma once
+#include <Arduino.h>
+const uint8_t myscript[] PROGMEM = R"rawliteral(
 
 //===  Скрываем пароль в окне ввода пароля. Б - Безопасность.
 
@@ -882,7 +885,8 @@ if (PASSWORD_MASK_ENABLED) {
 }
 //=========================
 
-
+ 
+)rawliteral";
   ```
 </details>
 
@@ -892,7 +896,9 @@ if (PASSWORD_MASK_ENABLED) {
   > файл css стилей 
 
   ```
-
+#pragma once
+#include <Arduino.h>
+const char  mystyle[] PROGMEM = R"rawliteral(
 @font-face {
     font-family: 'dot';
     src: url('dot.woff2') format('woff2')
@@ -1108,6 +1114,8 @@ border-radius: 4px;
      `;
     }
 }
+
+)rawliteral";
   ```
 </details>
 
