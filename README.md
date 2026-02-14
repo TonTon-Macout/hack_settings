@@ -766,16 +766,7 @@ body > div.main > div.main_col >div.page> div.buttons>.button {
     width: 100%;
     padding: 10px 10px;
 }
-.nav {
-    font-family: sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 500;
-    font-style: normal;
-    color: var(--accent);
-    margin-left: 10px;
-    filter: brightness(2.8) grayscale(1);
- }
-/* запретить */
+
 
 .log .info { /* текст уровня инфо в логгере*/
     color: var(--accent);
