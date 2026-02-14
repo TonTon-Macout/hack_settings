@@ -734,162 +734,162 @@ const PASSWORD_MASK_ENABLED = true;  // true - скрипт работает, fa
 const PASSWORD_DEBUG = false;        // true - логи включены, false - выключены
 
 function applyPasswordMask() {
-    // Полное отключение скрипта
-    if (!PASSWORD_MASK_ENABLED) return;
-    
-    // Ищем только dialog_back, который появляется динамически
-    const dialogs = document.querySelectorAll('.dialog_back');
-    
-    if (PASSWORD_DEBUG) {
-        console.log(`🔍 Найдено dialog_back: ${dialogs.length}`);
-    }
-    
-    dialogs.forEach(dialog => {
-        const label = dialog.querySelector('label');
-        if (!label) return;
-        
-        const labelText = label.textContent.trim().toLowerCase();
-        
-        if (labelText === 'пароль') {
-            const textarea = dialog.querySelector('textarea');
-            
-            if (textarea) {
-                textarea.style.fontFamily = 'text-security-disc';
-                textarea.style.webkitTextSecurity = 'disc';
-                
-                if (PASSWORD_DEBUG) {
-                    console.log('✅ Маска пароля применена к диалогу');
-                }
-            }
-        }
-    });
+  // Полное отключение скрипта
+  if (!PASSWORD_MASK_ENABLED) return;
+  
+  // Ищем только dialog_back, который появляется динамически
+  const dialogs = document.querySelectorAll('.dialog_back');
+  
+  if (PASSWORD_DEBUG) {
+      console.log(`🔍 Найдено dialog_back: ${dialogs.length}`);
+  }
+  
+  dialogs.forEach(dialog => {
+      const label = dialog.querySelector('label');
+      if (!label) return;
+      
+      const labelText = label.textContent.trim().toLowerCase();
+      
+      if (labelText === 'пароль') {
+          const textarea = dialog.querySelector('textarea');
+          
+          if (textarea) {
+              textarea.style.fontFamily = 'text-security-disc';
+              textarea.style.webkitTextSecurity = 'disc';
+              
+              if (PASSWORD_DEBUG) {
+                  console.log('✅ Маска пароля применена к диалогу');
+              }
+          }
+      }
+  });
 }
 
 // Применить к существующим, если скрипт включен
 if (PASSWORD_MASK_ENABLED) {
-    applyPasswordMask();
+  applyPasswordMask();
 }
 
 // Наблюдаем ТОЛЬКО за появлением dialog_back
 const observer = new MutationObserver((mutations) => {
-    // Полное отключение скрипта
-    if (!PASSWORD_MASK_ENABLED) return;
-    
-    let needsUpdate = false;
-    
-    mutations.forEach(mutation => {
-        mutation.addedNodes.forEach(node => {
-            // Проверяем, не появился ли dialog_back
-            if (node.nodeType === 1) { // element node
-                if (node.matches?.('.dialog_back') || node.querySelector?.('.dialog_back')) {
-                    needsUpdate = true;
-                }
-            }
-        });
-    });
-    
-    if (needsUpdate) {
-        setTimeout(applyPasswordMask, 50);
-    }
+  // Полное отключение скрипта
+  if (!PASSWORD_MASK_ENABLED) return;
+  
+  let needsUpdate = false;
+  
+  mutations.forEach(mutation => {
+      mutation.addedNodes.forEach(node => {
+          // Проверяем, не появился ли dialog_back
+          if (node.nodeType === 1) { // element node
+              if (node.matches?.('.dialog_back') || node.querySelector?.('.dialog_back')) {
+                  needsUpdate = true;
+              }
+          }
+      });
+  });
+  
+  if (needsUpdate) {
+      setTimeout(applyPasswordMask, 50);
+  }
 });
 
 // Запускаем наблюдатель только если скрипт включен
 if (PASSWORD_MASK_ENABLED) {
-    observer.observe(document.body, {
-        childList: true,
-        subtree: true
-    });
+  observer.observe(document.body, {
+      childList: true,
+      subtree: true
+  });
 }
 //=========
 
 
 // кнока  справки ================
 
- function help(contentType = 'main') {
-    // Создание элементов
-    const popup = document.createElement('div');
-    const popupHeader = document.createElement('div');
-    const popupBody = document.createElement('div');
-    const popupFooter = document.createElement('div');
-    const closeButton = document.createElement('button');
+function help(contentType = 'main') {
+  // Создание элементов
+  const popup = document.createElement('div');
+  const popupHeader = document.createElement('div');
+  const popupBody = document.createElement('div');
+  const popupFooter = document.createElement('div');
+  const closeButton = document.createElement('button');
 
-    // Присвоение классов
-    popup.className = 'popupHelp';
-    popupHeader.className = 'popupHelp-header';
-    popupBody.className = 'popupHelp-body';
-    popupFooter.className = 'popupHelp-footer';
-    closeButton.className = 'popupHelp-close-btn';
-   
-    //const versionElement = document.querySelector('[data-version]');
-    //const VERSION = versionElement ? versionElement.dataset.version : '[хз]';
-    //const vers = '<span style="color: gray;">версия прошивки: </span></br>' + VERSION ;
-    
-    // Контент
-    popupHeader.textContent = 'Справка';
-    switch (contentType.toLowerCase()) {
-        
-        case 'main':
-            popupBody.innerHTML = `
-               <!-- <h3>Оглавление</h3> 
-                
-                <h5>Оглавление</h5>-->
-                <ol class = "main_pop">
-                    <li><a href="#" onclick="help('help'); return false;">Теплицы</a> </li>
-                    <li><a href="#" onclick="help('about'); return false;">О программе</a> </li>
-                </ol>
-            `;
-
-            break;
-        case 'help':
-            popupBody.innerHTML = `
-                <h3>Помощ в пути!</h3>
-                <ul>
-                    <li>"<b>🤷</b>": или нет</li>
-                    <li>"<b>Баги</b>": их нет но есть фичи</li>
-                </ul>
-            `;
-            break;
-
-
-        case 'about':
-                popupBody.innerHTML = `
-                   <!-- <h3>О программе:</h3> -->
-                    <h4>Собсвтенно программа</h4>
-                    </br>
-                `;
-        break;
+  // Присвоение классов
+  popup.className = 'popupHelp';
+  popupHeader.className = 'popupHelp-header';
+  popupBody.className = 'popupHelp-body';
+  popupFooter.className = 'popupHelp-footer';
+  closeButton.className = 'popupHelp-close-btn';
  
- 
- 
-            default:
-            popupBody.innerHTML = `
-                <h3>Ошибка</h3>
-                <p>упс...</p>
-            `;
-            break;
-    }
+  //const versionElement = document.querySelector('[data-version]');
+  //const VERSION = versionElement ? versionElement.dataset.version : '[хз]';
+  //const vers = '<span style="color: gray;">версия прошивки: </span></br>' + VERSION ;
+  
+  // Контент
+  popupHeader.textContent = 'Справка';
+  switch (contentType.toLowerCase()) {
+      
+      case 'main':
+          popupBody.innerHTML = `
+             <!-- <h3>Оглавление</h3> 
+              
+              <h5>Оглавление</h5>-->
+              <ol class = "main_pop">
+                  <li><a href="#" onclick="help('help'); return false;">Помогите!</a> </li>
+                  <li><a href="#" onclick="help('about'); return false;">О программе</a> </li>
+              </ol>
+          `;
 
-    closeButton.textContent = 'Закрыть';
+          break;
+      case 'help':
+          popupBody.innerHTML = `
+              <h3>Помощ в пути!</h3>
+              <ul>
+                  <li>или нет 🤷</li>
+                  <li><b>Известные баги</b>: их нет но есть фичи</li>
+              </ul>
+          `;
+          break;
 
 
-    popup.style.display = 'flex'; // Показываем попап
+      case 'about':
+              popupBody.innerHTML = `
+                 <!-- <h3>О программе:</h3> -->
+                  <h4>Собсвтенно программа</h4>
+                  </br>
+              `;
+      break;
 
-    // Обработчик для кнопки закрытия
-    closeButton.onclick = function() {
-        popup.style.display = 'none'; // Скрываем 
-        // Или document.body.removeChild(popup); для полного удаления
-    };
 
-    // Сборка попапа
-    popupFooter.appendChild(closeButton);
-    popup.appendChild(popupHeader);
-    popup.appendChild(popupBody);
-    popup.appendChild(popupFooter);
-    document.body.appendChild(popup);
+
+          default:
+          popupBody.innerHTML = `
+              <h3>Ошибка</h3>
+              <p>упс...</p>
+          `;
+          break;
+  }
+
+  closeButton.textContent = 'Закрыть';
+
+
+  popup.style.display = 'flex'; // Показываем попап
+
+  // Обработчик для кнопки закрытия
+  closeButton.onclick = function() {
+      popup.style.display = 'none'; // Скрываем 
+      // Или document.body.removeChild(popup); для полного удаления
+  };
+
+  // Сборка попапа
+  popupFooter.appendChild(closeButton);
+  popup.appendChild(popupHeader);
+  popup.appendChild(popupBody);
+  popup.appendChild(popupFooter);
+  document.body.appendChild(popup);
 }
 //=========================
 
- 
+
 )rawliteral";
   ```
 </details>
@@ -904,63 +904,63 @@ if (PASSWORD_MASK_ENABLED) {
 #include <Arduino.h>
 const char  mystyle[] PROGMEM = R"rawliteral(
 @font-face {
-    font-family: 'dot';
-    src: url('dot.woff2') format('woff2')
+  font-family: 'dot';
+  src: url('dot.woff2') format('woff2')
 }
 .nav {
-    font-family: "dot", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 500;
-    font-style: normal;
-    color: var(--accent);
-    margin-left: 10px;
-    filter: brightness(2.8) grayscale(1);
- }
+  font-family: "dot", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  color: var(--accent);
+  margin-left: 10px;
+  filter: brightness(2.8) grayscale(1);
+}
 /* ============================================== */
 .HR {
-    background-color: var(--back);
-    margin: -12px -10px;
-    padding: 0px 10px;
-    display: flex;
-    height: 14px;
+  background-color: var(--back);
+  margin: -12px -10px;
+  padding: 0px 10px;
+  display: flex;
+  height: 14px;
 }
 .widget:has(#uniqueStyle){display:none;!important;}
 /* ============================================== */
 /* ИСПРАВЛЕНИЯ СТИЛЕЙ СЕТТИНГС */
 div.main > div.main_col >div.page> div.buttons>.button:nth-child(1) {
-    border-radius: 10px 0 0 10px;
-    border-right: solid 2px var(--back);
+  border-radius: 10px 0 0 10px;
+  border-right: solid 2px var(--back);
 }
 body > div.main > div.main_col >div.page> div.buttons {
-    padding: 6px 0px;
-    margin: 35px 11px 6px 11px;
+  padding: 6px 0px;
+  margin: 35px 11px 6px 11px;
 }
 div.main > div.main_col >div.page> div.buttons>.button:nth-child(2) {
-    border-radius: 0px 10px 10px 0px;
-    border-left: solid 2px var(--back);
+  border-radius: 0px 10px 10px 0px;
+  border-left: solid 2px var(--back);
 }
 body > div.main > div.main_col >div.page> div.buttons>.button {
-    margin: 0px;
-    width: 100%;
-    padding: 10px 10px;
+  margin: 0px;
+  width: 100%;
+  padding: 10px 10px;
 }
 
 
 .log .info { /* текст уровня инфо в логгере*/
-    color: var(--accent);
+  color: var(--accent);
 }
 .log p { /* просто текст в логгере*/
-    color: var(--accent);
-    max-height: 500px;
+  color: var(--accent);
+  max-height: 500px;
 }
 /* ДЛЯ ТЕМНОЙ ТЕМЫ */
 /* добавить -- body.theme_light.theme_dark  */
 
 /* названия групп */
 body.theme_light.theme_dark .group_title span {
-    color: var(--accent);
-    filter: brightness(0.8); /* уменьшаем яркость */
-    padding-left: 20px;
+  color: var(--accent);
+  filter: brightness(0.8); /* уменьшаем яркость */
+  padding-left: 20px;
 }
 
 /* ДЛЯ СВЕТЛОЙ ТЕМЫ */
@@ -968,114 +968,114 @@ body.theme_light.theme_dark .group_title span {
 
 /* общие цвета */
 body.theme_light:not(.theme_dark) {
-    /* --accent: #5837a9 !important; */
- }
+  /* --accent: #5837a9 !important; */
+}
 
 body.theme_light:not(.theme_dark) .group_col>.buttons:last-child:not(:only-child) {
-    border-radius: 0px 0px 15px 15px;
+  border-radius: 0px 0px 15px 15px;
 }
 /* текст в логере уровня инфо */
 body.theme_light:not(.theme_dark) .log .info {
-    color: #37483b;
+  color: #37483b;
 }
 .theme_light:not(.theme_dark) {
-   --dark: #8d6767;
-   --back: #e5d73e;
-   --tab: #4545bf;
-   --font: #ffeded;
-   --font_tint: #d3ffd8;
-   --font_inv: #fbfbfb;
-   --shadow: #000000b8;
-   --shadow_light: #00180622;
-   --accent: #5837a9;  
+ --dark: #8d6767;
+ --back: #e5d73e;
+ --tab: #4545bf;
+ --font: #ffeded;
+ --font_tint: #d3ffd8;
+ --font_inv: #fbfbfb;
+ --shadow: #000000b8;
+ --shadow_light: #00180622;
+ --accent: #5837a9;  
 }
 
 .theme_light:not(.theme_dark) .header {
-    position: fixed;
-    top: 0;
-    z-index: 1000000;
-    display: flex;
-    justify-content: space-between;
-    background: #1f1f61;
-    padding: 7px 15px;
-    box-sizing: border-box;
-    margin: auto;
-    left:0;
-    /* max-width: 500px; */
-    width: 100%;
-    border: 5px #00ffde;
-    color: #00ff8c;
-    border-bottom: solid 0px rgb(90, 78, 188);
-    box-shadow: 1px 0px 4px #ffffff;
+  position: fixed;
+  top: 0;
+  z-index: 1000000;
+  display: flex;
+  justify-content: space-between;
+  background: #1f1f61;
+  padding: 7px 15px;
+  box-sizing: border-box;
+  margin: auto;
+  left:0;
+  /* max-width: 500px; */
+  width: 100%;
+  border: 5px #00ffde;
+  color: #00ff8c;
+  border-bottom: solid 0px rgb(90, 78, 188);
+  box-shadow: 1px 0px 4px #ffffff;
 }
 
 .theme_light:not(.theme_dark) .page:first-of-type {
-    margin-top: 45px;
+  margin-top: 45px;
 }
 .theme_light:not(.theme_dark) .menu_icons {
-    margin-top: 50px;
- }
+  margin-top: 50px;
+}
 /* разделение двух горизонтальных виджетов */
 .theme_light:not(.theme_dark) .group_row > .widget:nth-of-type(2):has(.widget_label) {
-   border-left: 2px solid #e5d73e;
-   padding-left: 10px;
- }
+ border-left: 2px solid #e5d73e;
+ padding-left: 10px;
+}
 
 /* кнопки в группе  */
 .theme_light:not(.theme_dark) .group_col>.button:last-child {
-       box-shadow: inset 0 3px 5px #00000035;
+     box-shadow: inset 0 3px 5px #00000035;
 }
 .theme_light:not(.theme_dark) .group_col>.buttons:last-child:not(:only-child)>.button {
-       box-shadow: inset 0 3px 5px #00000035;
+     box-shadow: inset 0 3px 5px #00000035;
 }
 
 /* названия групп */
 .theme_light:not(.theme_dark)  .group_title span {
-   color: #4ca93d;
-   font-weight: 600;
-   margin-left: 10px;
- }
+ color: #4ca93d;
+ font-weight: 600;
+ margin-left: 10px;
+}
 /* применяется ко всем свичам */
 .theme_light:not(.theme_dark) .switch {
-    background-color: #3846c3;;
-    border: solid 2px #453079;
-    border-radius: 8px;
-    height: 25px;
-    width: 50px;
-    box-shadow: inset 0 0px 6px rgb(0 0 0 / 37%);
+  background-color: #3846c3;;
+  border: solid 2px #453079;
+  border-radius: 8px;
+  height: 25px;
+  width: 50px;
+  box-shadow: inset 0 0px 6px rgb(0 0 0 / 37%);
 }
 /* переопределить для включенного свича */
 .theme_light:not(.theme_dark) .switch:checked {
-    background-color: #5168ff;
-    box-shadow: inset 0 0px 8px 0px rgb(243 198 150 / 91%);
+  background-color: #5168ff;
+  box-shadow: inset 0 0px 8px 0px rgb(243 198 150 / 91%);
 }
 
 /*  выключатель выключенного свича */
 .theme_light:not(.theme_dark) .switch:before {
-   background: #ffffffa6;
-   border-radius: 2px;
-   box-shadow: 0 0px 7px rgb(0 0 0);
-   height: 21px;
-   left: 8px;
-   position: absolute;
-   /* right: -2px; */
-   top: -0px;
-   transition: all .15s;
-   width: 10px;
-   z-index: 2;
+ background: #ffffffa6;
+ border-radius: 2px;
+ box-shadow: 0 0px 7px rgb(0 0 0);
+ height: 21px;
+ left: 8px;
+ position: absolute;
+ /* right: -2px; */
+ top: -0px;
+ transition: all .15s;
+ width: 10px;
+ z-index: 2;
 }
 /*  выключатель включенного свича */
 .theme_light:not(.theme_dark) .switch:checked:before {
-  background: #ffffff;
-  border-radius: 2px;
-  box-shadow: 0 0px 9px rgb(0 0 0 / 59%);
-  height: 21px;
-  left: 26px;
-  position: absolute;
-  top: +0px;
-  transition: all .15s;
-  width: 10px;
-  z-index: 2;
+background: #ffffff;
+border-radius: 2px;
+box-shadow: 0 0px 9px rgb(0 0 0 / 59%);
+height: 21px;
+left: 26px;
+position: absolute;
+top: +0px;
+transition: all .15s;
+width: 10px;
+z-index: 2;
 }   
 /* ползунок слайдера */
 .theme_light:not(.theme_dark)  input[type="range"]::-webkit-slider-thumb {
@@ -1090,172 +1090,178 @@ border-radius: 4px;
 
 /* текст первого виджета в группе */
 .theme_light:not(.theme_dark)   .group>.group_col>.widget:first-of-type>.widget_row>div>.widget_label:first-of-type {
-      font-weight: bold;
-      color: #efd4d4;
-      text-shadow: 5px 2px 5px #0c1d5938, -5px -1px 10px #242a4b24, 0px 0px 10px #0c102b4f, 0px 0px 20px #1b1c3100;
+    font-weight: bold;
+    color: #efd4d4;
+    text-shadow: 5px 2px 5px #0c1d5938, -5px -1px 10px #242a4b24, 0px 0px 10px #0c102b4f, 0px 0px 20px #1b1c3100;
 }  
 /* одинокая группа кнопок */
- .theme_light:not(.theme_dark) > div.main > div.main_col >div.page> div.buttons>.button:nth-child(2) {
-      border-radius: 0px 10px 10px 0px; 
-      border-left: solid 2px #e5d73e;
- } 
- .theme_light:not(.theme_dark) > div.main > div.main_col >div.page> div.buttons>.button:nth-child(1) {
-      border-radius: 10px 0 0 10px; 
-      border-right: solid 2px #e5d73e;
- } 
+.theme_light:not(.theme_dark) > div.main > div.main_col >div.page> div.buttons>.button:nth-child(2) {
+    border-radius: 0px 10px 10px 0px; 
+    border-left: solid 2px #e5d73e;
+} 
+.theme_light:not(.theme_dark) > div.main > div.main_col >div.page> div.buttons>.button:nth-child(1) {
+    border-radius: 10px 0 0 10px; 
+    border-right: solid 2px #e5d73e;
+} 
 
- /* статус */
+/* статус */
 /* должен быть в ROW */
- .page>.row>.group_row:last-of-type {
-         box-shadow: none;
-         margin: 0 10px;
-         background: transparent;
-         justify-content: center;
-         color: #2e8f18;
- }
+.page>.row>.group_row:last-of-type {
+       box-shadow: none;
+       margin: 0 10px;
+       background: transparent;
+       justify-content: center;
+       color: #2e8f18;
+}
 
 
 /* ==================================== */
 .help_butt {
     border: 0;
-    background-color: transparent;
-    border-left: 3px solid #d0cdcd;
-    padding-left: 10px;
-    color: #005985;
-    font-weight: bold;
-    font-size: 20px;
+    background-color: var(--accent);
+    border-radius: 20px;
+    height: 30px;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 14px;
+    padding-left: 14px;
+    padding-right: 14px;
+    font-family: unset;
     cursor: pointer;
 }
 .help_butt_main {
-    border:0;
-    background-color:transparent;
-    height:30px;
-    color: #005985;
-    font-weight:700;
-    font-size:21px;
-    font-family:unset;
-    width:50px;
+    border: 0;
+    background-color: var(--accent);
+    border-radius: 20px;
+    height: 30px;
+    width: 30px;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 21px;
+    font-family: unset;
     cursor: pointer;
 }
 .popupHelp {
-    max-width: 550px;
-    border: solid 0px rgb(0, 89, 133);
-    text-align: center;
-    color: #272727;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #f4f4f4;
-    padding: 10px;
-    box-shadow: rgb(0 55 81) 0px 0px 8px 5px, rgb(0 89 133) 0px 0px 0px 60px;
-    z-index: 1000;
-    width: 88%;
-    height: 93%;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  max-width: 550px;
+  border: solid 0px rgb(0, 89, 133);
+  text-align: center;
+  color: #272727;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #f4f4f4;
+  padding: 10px;
+  box-shadow: rgb(0 55 81) 0px 0px 8px 5px, rgb(0 89 133) 0px 0px 0px 60px;
+  z-index: 10000001;
+  width: 88%;
+  height: 93%;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .popupHelp-header {
-    font-size: 24px;
-    font-weight: bold;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #ddd;
-    color: rgb(0, 89, 133);
+  font-size: 24px;
+  font-weight: bold;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+  color: rgb(0, 89, 133);
 }
 
 .popupHelp-body {
-    flex: 1;
-    padding: 5px;
-    overflow-y: auto;
-    font-size: 15px;
-    text-align: left;
+  flex: 1;
+  padding: 5px;
+  overflow-y: auto;
+  font-size: 15px;
+  text-align: left;
 }
 .popupHelp-body ul {
-    padding-inline-start: 20px;
-    text-align: left;
+  padding-inline-start: 20px;
+  text-align: left;
 }
 .popupHelp-body h5  {/* по центру средний */
-    text-align: center;
-    margin-left: 10px;
-    color: rgb(0, 89, 133);
-    font-size: 21px;
- }
+  text-align: center;
+  margin-left: 10px;
+  color: rgb(0, 89, 133);
+  font-size: 21px;
+}
 .popupHelp-body h4  {  /* небольшой светлосиний заголовок  */
-    margin-left: 10px;
-    color: rgb(47, 116, 152);
-    font-size: 15px;
+  margin-left: 10px;
+  color: rgb(47, 116, 152);
+  font-size: 15px;
 }
 .popupHelp-body h3  { 
-    text-align: left ; /* слева средний */
-    margin-left: 10px;
-    color: rgb(0, 89, 133);
-    font-size: 21px;
- }
+  text-align: left ; /* слева средний */
+  margin-left: 10px;
+  color: rgb(0, 89, 133);
+  font-size: 21px;
+}
 .popupHelp-footer {
-    padding: 0px;
-    border-top: 1px solid #ddd;
-    text-align: center;
+  padding: 0px;
+  border-top: 1px solid #ddd;
+  text-align: center;
 }
 
 .popupHelp-close-btn {
-    margin-top: 10px;
-    background-color: rgb(0, 89, 133);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
+  margin-top: 10px;
+  background-color: rgb(0, 89, 133);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
 }
 ol.main_pop {
-    counter-reset: li; /* Сбрасываем счётчик для <ol> */
-    list-style: none;
-    padding: 0;
+  counter-reset: li; /* Сбрасываем счётчик для <ol> */
+  list-style: none;
+  padding: 0;
 }
 
 ol.main_pop li {
-    display: flex; 
-    align-items: center;
-    margin: 8px 0; 
+  display: flex; 
+  align-items: center;
+  margin: 8px 0; 
 }
 
 ol.main_pop a {
-    border-radius: 6px;
-    align-items: center; /* Центрируем текст в ссылке */
-    padding: 10px 18px 10px 25px;
-    margin-left: 10px; /* Отступ между <b> и <a> */
-    background: #ffffff;
-    font-size: 18px;
-    color: #005985;
-    text-decoration: none;
-    transition: all 1s ease-out;
-    box-shadow: 0 0 10px var(--shadow);
-    width: 100%; /* Ширина ссылки */
+  border-radius: 6px;
+  align-items: center; /* Центрируем текст в ссылке */
+  padding: 10px 18px 10px 25px;
+  margin-left: 10px; /* Отступ между <b> и <a> */
+  background: #ffffff;
+  font-size: 18px;
+  color: #005985;
+  text-decoration: none;
+  transition: all 1s ease-out;
+  box-shadow: 0 0 10px var(--shadow);
+  width: 100%; /* Ширина ссылки */
 }
 
 ol.main_pop a:hover {
-    background: #005985;
-    color: white;
+  background: #005985;
+  color: white;
 }
 
 ol.main_pop li a:before {
-    padding: 10px 15px;
-    margin: -10px 0;
-    content: counter(li);
-    counter-increment: li;
-    position: relative;
-    left: -35px;
-    background: #005985;
-    text-align: center;
-    font-weight: bold;
-    color: #f4f4f4;
-    border-top-left-radius:6px;
-    border-bottom-left-radius:6px;
+  padding: 10px 15px;
+  margin: -10px 0;
+  content: counter(li);
+  counter-increment: li;
+  position: relative;
+  left: -35px;
+  background: #005985;
+  text-align: center;
+  font-weight: bold;
+  color: #f4f4f4;
+  border-top-left-radius:6px;
+  border-bottom-left-radius:6px;
 }
 
 /* ==================================== */
+
+)rawliteral";
 
 )rawliteral";
   ```
