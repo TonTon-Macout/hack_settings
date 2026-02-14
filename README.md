@@ -717,7 +717,11 @@ server.onRequest([this](ghttp::ServerBase::Request req) {
 > в некоторых случаях потребуется таймаут-ожидание, чтобы скрипт сеттингаса успел внести свои изменения
 
 скрипт скрытия пароля просто работает, а вот код для кнопки:
-``` b.HTML("", R"raw(<button  class="help_butt" type="button"  onclick="help('tepl')">?</button>)raw");  ```
+```
+ b.HTML("", R"raw(<button class="help_butt_main"  type="button"  onclick="help('main')">?</button>)raw"); 
+ b.HTML("", R"raw(<button  class="help_butt" type="button"  onclick="help('about')">о порограмме</button>)raw"); 
+
+```
 
   ```
 #pragma once
