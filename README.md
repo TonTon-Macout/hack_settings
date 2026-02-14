@@ -721,13 +721,241 @@ server.onRequest([this](ghttp::ServerBase::Request req) {
 <details>
 <summary>myStyle.h</summary>
 
+  > файл css стилей 
+
   ```
 
+@font-face {
+    font-family: 'dot';
+    src: url('dot.woff2') format('woff2')
+}
+.nav {
+    font-family: "dot", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    color: var(--accent);
+    margin-left: 10px;
+    filter: brightness(2.8) grayscale(1);
+ }
+/* ============================================== */
+.HR {
+    background-color: var(--back);
+    margin: -12px -10px;
+    padding: 0px 10px;
+    display: flex;
+    height: 14px;
+}
+.widget:has(#uniqueStyle){display:none;!important;}
+/* ============================================== */
+/* ИСПРАВЛЕНИЯ СТИЛЕЙ СЕТТИНГС */
+div.main > div.main_col >div.page> div.buttons>.button:nth-child(1) {
+    border-radius: 10px 0 0 10px;
+    border-right: solid 2px var(--back);
+}
+body > div.main > div.main_col >div.page> div.buttons {
+    padding: 6px 0px;
+    margin: 35px 11px 6px 11px;
+}
+div.main > div.main_col >div.page> div.buttons>.button:nth-child(2) {
+    border-radius: 0px 10px 10px 0px;
+    border-left: solid 2px var(--back);
+}
+body > div.main > div.main_col >div.page> div.buttons>.button {
+    margin: 0px;
+    width: 100%;
+    padding: 10px 10px;
+}
+.nav {
+    font-family: sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    color: var(--accent);
+    margin-left: 10px;
+    filter: brightness(2.8) grayscale(1);
+ }
+/* запретить */
+
+.log .info { /* текст уровня инфо в логгере*/
+    color: var(--accent);
+}
+.log p { /* просто текст в логгере*/
+    color: var(--accent);
+    max-height: 500px;
+}
+/* ДЛЯ ТЕМНОЙ ТЕМЫ */
+/* добавить -- body.theme_light.theme_dark  */
+
+/* названия групп */
+body.theme_light.theme_dark .group_title span {
+    color: var(--accent);
+    filter: brightness(0.8); /* уменьшаем яркость */
+    padding-left: 20px;
+}
+
+/* ДЛЯ СВЕТЛОЙ ТЕМЫ */
+/* добовляем --  .theme_light:not(.theme_dark)  */ 
+
+/* общие цвета */
+body.theme_light:not(.theme_dark) {
+    /* --accent: #5837a9 !important; */
+ }
+
+body.theme_light:not(.theme_dark) .group_col>.buttons:last-child:not(:only-child) {
+    border-radius: 0px 0px 15px 15px;
+}
+/* текст в логере уровня инфо */
+body.theme_light:not(.theme_dark) .log .info {
+    color: #37483b;
+}
+.theme_light:not(.theme_dark) {
+   --dark: #8d6767;
+   --back: #e5d73e;
+   --tab: #4545bf;
+   --font: #ffeded;
+   --font_tint: #d3ffd8;
+   --font_inv: #fbfbfb;
+   --shadow: #000000b8;
+   --shadow_light: #00180622;
+   --accent: #5837a9;  
+}
+
+.theme_light:not(.theme_dark) .header {
+    position: fixed;
+    top: 0;
+    z-index: 1000000;
+    display: flex;
+    justify-content: space-between;
+    background: #1f1f61;
+    padding: 7px 15px;
+    box-sizing: border-box;
+    margin: auto;
+    left:0;
+    /* max-width: 500px; */
+    width: 100%;
+    border: 5px #00ffde;
+    color: #00ff8c;
+    border-bottom: solid 0px rgb(90, 78, 188);
+    box-shadow: 1px 0px 4px #ffffff;
+}
+
+.theme_light:not(.theme_dark) .page:first-of-type {
+    margin-top: 45px;
+}
+.theme_light:not(.theme_dark) .menu_icons {
+    margin-top: 50px;
+ }
+/* разделение двух горизонтальных виджетов */
+.theme_light:not(.theme_dark) .group_row > .widget:nth-of-type(2):has(.widget_label) {
+   border-left: 2px solid #e5d73e;
+   padding-left: 10px;
+ }
+
+/* кнопки в группе  */
+.theme_light:not(.theme_dark) .group_col>.button:last-child {
+       box-shadow: inset 0 3px 5px #00000035;
+}
+.theme_light:not(.theme_dark) .group_col>.buttons:last-child:not(:only-child)>.button {
+       box-shadow: inset 0 3px 5px #00000035;
+}
+
+/* названия групп */
+.theme_light:not(.theme_dark)  .group_title span {
+   color: #4ca93d;
+   font-weight: 600;
+   margin-left: 10px;
+ }
+/* применяется ко всем свичам */
+.theme_light:not(.theme_dark) .switch {
+    background-color: #3846c3;;
+    border: solid 2px #453079;
+    border-radius: 8px;
+    height: 25px;
+    width: 50px;
+    box-shadow: inset 0 0px 6px rgb(0 0 0 / 37%);
+}
+/* переопределить для включенного свича */
+.theme_light:not(.theme_dark) .switch:checked {
+    background-color: #5168ff;
+    box-shadow: inset 0 0px 8px 0px rgb(243 198 150 / 91%);
+}
+
+/*  выключатель выключенного свича */
+.theme_light:not(.theme_dark) .switch:before {
+   background: #ffffffa6;
+   border-radius: 2px;
+   box-shadow: 0 0px 7px rgb(0 0 0);
+   height: 21px;
+   left: 8px;
+   position: absolute;
+   /* right: -2px; */
+   top: -0px;
+   transition: all .15s;
+   width: 10px;
+   z-index: 2;
+}
+/*  выключатель включенного свича */
+.theme_light:not(.theme_dark) .switch:checked:before {
+  background: #ffffff;
+  border-radius: 2px;
+  box-shadow: 0 0px 9px rgb(0 0 0 / 59%);
+  height: 21px;
+  left: 26px;
+  position: absolute;
+  top: +0px;
+  transition: all .15s;
+  width: 10px;
+  z-index: 2;
+}   
+/* ползунок слайдера */
+.theme_light:not(.theme_dark)  input[type="range"]::-webkit-slider-thumb {
+-webkit-appearance: none; 
+appearance: none; 
+width: 15px; 
+height: 25px;
+background: #ffffff;
+border-radius: 4px; 
+}
+
+
+/* текст первого виджета в группе */
+.theme_light:not(.theme_dark)   .group>.group_col>.widget:first-of-type>.widget_row>div>.widget_label:first-of-type {
+      font-weight: bold;
+      color: #efd4d4;
+      text-shadow: 5px 2px 5px #0c1d5938, -5px -1px 10px #242a4b24, 0px 0px 10px #0c102b4f, 0px 0px 20px #1b1c3100;
+}  
+/* одинокая группа кнопок */
+ .theme_light:not(.theme_dark) > div.main > div.main_col >div.page> div.buttons>.button:nth-child(2) {
+      border-radius: 0px 10px 10px 0px; 
+      border-left: solid 2px #e5d73e;
+ } 
+ .theme_light:not(.theme_dark) > div.main > div.main_col >div.page> div.buttons>.button:nth-child(1) {
+      border-radius: 10px 0 0 10px; 
+      border-right: solid 2px #e5d73e;
+ } 
+
+ /* статус */
+/* должен быть в ROW */
+ .page>.row>.group_row:last-of-type {
+         box-shadow: none;
+         margin: 0 10px;
+         background: transparent;
+         justify-content: center;
+         color: #2e8f18;
+ }
+
+
+     `;
+    }
+}
   ```
 </details>
 
 <details>
 <summary>myFont.h</summary>
+
+> это точечный шрифт с просторов интернета, подготовленный для есп
 
   ```
 #pragma once
