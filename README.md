@@ -237,7 +237,7 @@ if (b.Switch("Звук молнии", &thunder_sound))b.reload();
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
     font-size: 12px;
-    color: var(--accent);
+    color: color-mix(in srgb, currentColor 80%, black);
 }
 .widget:has(.annotation){ 
     background-color: var(--back);
