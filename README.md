@@ -207,7 +207,8 @@ if (b.Switch("Звук молнии", &thunder_sound))b.reload();
 <details>
 <summary>картинка</summary>
   
-<img width="546" height="202" alt="Снимок экрана 2026-02-19 131042" src="https://github.com/user-attachments/assets/82d16120-68dd-4d6b-aa8a-cb7e89d4d4e1" />
+<img width="572" height="147" alt="Снимок экрана 2026-02-19 132300" src="https://github.com/user-attachments/assets/06bf454d-bdad-4b03-b02c-2484dba1a171" />
+
 
 </details>
 
