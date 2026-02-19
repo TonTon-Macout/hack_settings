@@ -53,7 +53,7 @@ _mode = false;
 > ℹ️ Так как Алекс Гайвер при разработке библиотеки не рассчитывал на любителей перетряхивать ки́шки, то не всегда есть возможность обойтись простым css селекоторм, иногда нужно с ними поприседать и побегать с бубном ~~(спросить думателя)~~,  но в конечном итоге изменить можно все. 
 
 
----------------
+
 <h2 id="tooltips" >Хочу больше, что делать?</h2>
 
 > ℹ️ **Tip**: Кроме изменения существующих элементов, можно добавлять свои, преумножая функционал Settings. Вот пример добавления всплывающих подсказок.
@@ -164,6 +164,94 @@ if (b.Switch("Звук молнии", &thunder_sound))b.reload();
 > 
 > 📋 оставим добавление поддержки подсказок в виджетах  в Row, в отдельно стоящих и в других специфисных случаях - в качестве домашнего задания
 
+------------------
+
+> ℹ️ **Tip**: А это просто добавлет пространство между виджетами.
+<details>
+<summary>картинка</summary>
+<img width="546" height="202" alt="Снимок экрана 2026-02-19 131042" src="https://github.com/user-attachments/assets/82d16120-68dd-4d6b-aa8a-cb7e89d4d4e1" />
+</details>
+
+<details>
+<summary>код</summary>
+  код виджета
+  
+  ```cpp
+ b.HTML("", "<span class=\"HR\"></span>");
+
+  ```
+
+ стили
+  ```css
+.widget:has(.HR) > div:first-of-type{
+     margin:0px !important;
+}
+.widget:has(.HR) { 
+    border:0 !important; 
+    padding: 0px  !important;
+}
+.HR {
+    background-color: var(--back);
+    display: flex;
+    height: 14px;
+}
+
+  ```
+
+</details>
+
+------------
+
+> ℹ️ **Tip**: Добавляем аннотацию.
+
+<details>
+<summary>картинка</summary>
+  
+<img width="546" height="202" alt="Снимок экрана 2026-02-19 131042" src="https://github.com/user-attachments/assets/82d16120-68dd-4d6b-aa8a-cb7e89d4d4e1" />
+
+</details>
+
+
+
+<details>
+<summary>код</summary>
+  код виджета
+  
+  ```cpp
+ b.HTML("", "<span class=\"annotation\">аннотация</span>");
+
+  ```
+
+ стили
+  ```css
+.annotation {
+    border: solid 1px var(--accent);
+    border-bottom: 0;
+    margin: 0px 10px;
+    margin-top: 8px;
+    padding: 4px 10px 4px 10px;
+    display: flex;
+    height: 14px;
+    width: fit-content;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    font-size: 12px;
+    color: var(--accent);
+}
+.widget:has(.annotation){ 
+    background-color: var(--back);
+    padding: 0px 0px;
+    margin:0px;
+    border:0 !important; 
+}
+.widget:has(.annotation) > div:first-of-type{
+     margin:0px !important;;
+}
+.widget:has(.annotation) + * { border-top:0 !important; }
+
+  ```
+
+</details>
 
 
 ---------------
