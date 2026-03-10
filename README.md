@@ -268,6 +268,57 @@ if (b.Switch("Звук молнии", &thunder_sound))b.reload();
 </details>
 
 
+------------
+
+> [!TIP]
+> Делаем неактивные свичи.
+
+<details>
+<summary>картинка</summary>
+  
+<img width="613" height="180" alt="Снимок экрана 2026-03-10 111707" src="https://github.com/user-attachments/assets/f248f80e-2290-4f5b-868a-95e11ad20c96" />
+
+
+</details>
+
+
+
+<details>
+<summary>код</summary>
+  код виджета
+  
+  ```cpp
+
+// Обычный активный свич
+if (b.Switch("Звук", &settings.sound)) b.reload();
+// Включенный неактивный свич
+b.HTML("", "<div class=\"widget_row\"><div><label class=\"widget_label\">Звук</label></div><div><input class=\"switch checked\" type=\"checkbox\" checked disabled></div></div>");
+// выключенных неактивный свич
+b.HTML("", "<div class=\"widget_row\"><div><label class=\"widget_label\">Звук</label></div><div><input class=\"switch unchecked\" type=\"checkbox\" disabled></div></div>");
+
+  ```
+
+ стили
+  ```css
+
+.switch.checked:checked {
+    background-color: #7c7c7c;
+}
+.switch.checked:before {
+    background: #aeaeae;
+}
+.switch.unchecked {
+    background-color: #3f3f3f;
+}
+.switch.unchecked:before {
+    background: #777777;
+}
+
+  ```
+
+</details>
+
+
 ---------------
 <h2 id="theme" >А если я любитель чего-то особенного?</h2>
 
