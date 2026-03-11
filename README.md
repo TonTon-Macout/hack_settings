@@ -13,11 +13,11 @@
 - [подключение javascript, css, шрифтов  ↓](#innards)
 
 
+<br>
 
 > [!IMPORTANT]
-> А [тут](https://github.com/TonTon-Macout/Settings/) форк библиотеки с возможностью подключения файла CSS стилей и JavaScrypt`а
-> 
-> И с нативной поддержкой всплывающих подсказок
+> А [тут](https://github.com/TonTon-Macout/Settings/) форк библиотеки с возможностью подключения файла CSS стилей и JavaScrypt`а, 
+> и с нативной поддержкой всплывающих подсказок
 
   
 ------------
